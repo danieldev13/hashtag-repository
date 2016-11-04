@@ -4,11 +4,12 @@ import json
 
 key = u'secret-key'
 default_algorithm = u'HS256'
+encoding = u'utf-8'
 
 
 def encode(payload, secret, algorithm):
     try:
-        result = jwt.encode({'some': 'payload'}, secret, algorithm)
+        result = jwt.encode(payload, secret, algorithm)
         return result
     except Exception as err:
         raise err
@@ -21,8 +22,9 @@ def decode(encoded, secret, algorithm):
         raise err
 
 
-def get_token(payload):
+def get_token(data):
     try:
+        payload = json.loads(data.decode(encoding))
         return encode(payload, key, default_algorithm)
     except Exception as err:
         raise err

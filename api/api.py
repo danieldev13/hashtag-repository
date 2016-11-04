@@ -37,4 +37,4 @@ class SecurityApi(Resource):
 
             return adapt_one_success(token)
         except Exception as err:
-            return adapt_critical('Error' + err)
+            return adapt_critical('Error' + str(err))

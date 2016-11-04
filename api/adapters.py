@@ -18,9 +18,8 @@ def adapt_success(data):
 
 def adapt_one_success(data):
     try:
-        result = '{"status": "OK", "total": ' \
-                      + str(len(data)) + \
-                      ', "data": ' + data + '}'
+        result = '{"status": "OK", "total": ' + \
+                      ', "data": "' + data + '"}'
 
         response = Response(result, status=200, mimetype='application/json')
         return response
