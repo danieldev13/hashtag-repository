@@ -32,7 +32,7 @@ class SettingsManager(object):
 
 class DatabaseSettings:
     def __init__(self):
-        self.__host = 'bolt://192.168.0.16:7687'
+        self.__host = 'bolt://localhost:7687'
         self.__user = 'neo4j'
         self.__pwd = 'cerosneo4j'
 

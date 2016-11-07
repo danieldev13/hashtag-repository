@@ -1,7 +1,7 @@
 def build_put_query(hashtag):
     try:
         query = "CREATE(h:Hashtag{{id: {0} ,text:'{1}'}})"\
-            .format(hashtag.id, hashtag.hashtag_message)
+            .format(hashtag.id, hashtag.text)
 
         return query
     except Exception as err:

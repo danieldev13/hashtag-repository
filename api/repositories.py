@@ -1,7 +1,7 @@
 from neo4j.v1 import GraphDatabase
 from neo4j.v1 import basic_auth
 
-from infrastructure import SettingsManager
+from settings import SettingsManager
 from query_builder import *
 from entities import Hashtag
 
@@ -21,7 +21,7 @@ def get_hashtags():
         for item in data:
             hashtag = Hashtag()
             hashtag.id = item['r']['id']
-            hashtag.hashtag_message = item['r']['text']
+            hashtag.text = item['r']['text']
 
             result.append(hashtag)
 

@@ -22,9 +22,25 @@ def decode(encoded, secret, algorithm):
         raise err
 
 
+def decode_string(encoded, secret, algorithm):
+    try:
+        return jwt.decode(encoded, secret, algorithm)
+    except Exception as err:
+        raise err
+
+
 def get_token(data):
     try:
         payload = json.loads(data.decode(encoding))
         return encode(payload, key, default_algorithm)
+    except Exception as err:
+        raise err
+
+
+def is_authenticated(token):
+    try:
+        decoded_token = decode_string(token, key, default_algorithm)
+
+        return decoded_token is not None
     except Exception as err:
         raise err
