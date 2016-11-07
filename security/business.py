@@ -1,10 +1,7 @@
 import jwt
 import json
 
-
-key = u'secret-key'
-default_algorithm = u'HS256'
-encoding = u'utf-8'
+from settings import SettingsManager
 
 
 def encode(payload, secret, algorithm):
@@ -31,15 +28,19 @@ def decode_string(encoded, secret, algorithm):
 
 def get_token(data):
     try:
-        payload = json.loads(data.decode(encoding))
-        return encode(payload, key, default_algorithm)
+        payload = json.loads(data.decode(SettingsManager.get_instance().get_application_settings.encoding))
+        return encode(payload,
+                      SettingsManager.get_instance().get_application_settings.key,
+                      SettingsManager.get_instance().get_application_settings.algorithm)
     except Exception as err:
         raise err
 
 
 def is_authenticated(token):
     try:
-        decoded_token = decode_string(token, key, default_algorithm)
+        decoded_token = decode_string(token,
+                                      SettingsManager.get_instance().get_application_settings.key,
+                                      SettingsManager.get_instance().get_application_settings.algorithm)
 
         return decoded_token is not None
     except Exception as err:
