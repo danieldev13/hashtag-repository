@@ -20,10 +20,28 @@ def get_hashtags():
 
         for item in data:
             hashtag = Hashtag()
-            hashtag.id = item['r']['id']
-            hashtag.text = item['r']['text']
+            hashtag.id = item['h']['id']
+            hashtag.text = item['h']['text']
 
             result.append(hashtag)
+
+        return result
+    except Exception as err:
+        raise err
+    finally:
+        session.close()
+
+
+def get_hashtag(id_hashtag):
+    result = Hashtag()
+    session = driver.session()
+    try:
+        query = build_get_one_query(id_hashtag)
+        data = session.run(query)
+
+        for item in data:
+            result.id = item['h']['id']
+            result.text = item['h']['text']
 
         return result
     except Exception as err:
