@@ -12,6 +12,7 @@ api.add_resource(HashtagApi, "/api/hashtag/<int:id_hashtag>",
                  methods=['GET', 'DELETE'],
                  endpoint="api_hashtag_endpoint")
 api.add_resource(HashtagListApi, "/api/hashtag/",
+                 methods=['GET'],
                  endpoint="api_hashtag_endpoint_get_list")
 api.add_resource(HashtagApi, "/api/hashtag/",
                  methods=['POST'],

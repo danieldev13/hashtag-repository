@@ -1,6 +1,7 @@
 from neo4j.v1 import GraphDatabase
 from neo4j.v1 import basic_auth
 
+from logger import Logger
 from settings import SettingsManager
 from query_builder import *
 from entities import Hashtag
@@ -10,7 +11,7 @@ driver = GraphDatabase.driver(SettingsManager.get_instance().get_database_settin
                               SettingsManager.get_instance().get_database_settings.password))
 
 
-def get_hashtags():
+def retrieve():
     result = []
     session = driver.session()
 
@@ -27,12 +28,13 @@ def get_hashtags():
 
         return result
     except Exception as err:
+        Logger.critical('There was an error while retrieving data', err)
         raise err
     finally:
         session.close()
 
 
-def get_hashtag(id_hashtag):
+def retrieve_one(id_hashtag):
     result = Hashtag()
     session = driver.session()
     try:
@@ -43,20 +45,39 @@ def get_hashtag(id_hashtag):
             result.id = item['h']['id']
             result.text = item['h']['text']
 
-        return result
+        if result.id is not None:
+            return result
+        else:
+            return None
+
     except Exception as err:
+        Logger.critical('There was an error while retrieving data', err)
         raise err
     finally:
         session.close()
 
 
-def put_hashtag(hashtag):
+def create(hashtag):
     session = driver.session()
 
     try:
         query = build_put_query(hashtag)
         session.run(query)
     except Exception as err:
+        Logger.critical('There was an error while retrieving data', err)
+        raise err
+    finally:
+        session.close()
+
+
+def delete(id_hashtag):
+    session = driver.session()
+
+    try:
+        query = build_delete_query(id_hashtag)
+        session.run(query)
+    except Exception as err:
+        Logger.critical('There was an error while retrieving data', err)
         raise err
     finally:
         session.close()

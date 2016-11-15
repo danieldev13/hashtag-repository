@@ -1,5 +1,5 @@
 from flask import Response
-from settings import Logger
+from logger import Logger
 from entities import Hashtag
 
 

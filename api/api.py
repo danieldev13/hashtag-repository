@@ -3,7 +3,7 @@ import json
 from flask import request
 from flask_restful import Resource
 
-from repositories import *
+from business import *
 from adapters import *
 
 
@@ -16,6 +16,10 @@ class HashtagApi(Resource):
         try:
 
             token = request.headers.get('auth-token')
+
+            if not check_token(token):
+                adapt_error('unauthorized')
+
             hashtag = get_hashtag(id_hashtag)
 
             return adapt_one_success(hashtag.to_json())
@@ -24,14 +28,23 @@ class HashtagApi(Resource):
 
     def post(self):
         try:
+
+            token = request.headers.get('auth-token')
+
+            if not check_token(token):
+                adapt_error('unauthorized')
+
             hashtag = adapt_hashtag(json.loads(request.data.decode('utf-8')))
             put_hashtag(hashtag)
+
+            return adapt_one_success('"Data posted"')
         except Exception as err:
             return adapt_critical('Error: ' + str(err.args))
 
-    def delete(self, id):
+    def delete(self, id_hashtag):
         try:
-            pass
+            delete_hashtag(id_hashtag)
+            return adapt_one_success('"Data deleted"')
         except Exception as err:
             return adapt_critical('Error: ' + str(err.args))
 
@@ -44,6 +57,10 @@ class HashtagListApi(Resource):
         try:
 
             token = request.headers.get('auth-token')
+
+            if not check_token(token):
+                adapt_error('unauthorized')
+
             result = []
             hashtags = get_hashtags()
 
