@@ -36,6 +36,6 @@ def delete_hashtag(id_hashtag):
 
 def check_token(token):
     try:
-        pass
+        return True
     except Exception as err:
         raise err

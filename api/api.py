@@ -18,7 +18,7 @@ class HashtagApi(Resource):
             token = request.headers.get('auth-token')
 
             if not check_token(token):
-                adapt_error('unauthorized')
+                return adapt_error('unauthorized')
 
             hashtag = get_hashtag(id_hashtag)
 
@@ -32,7 +32,7 @@ class HashtagApi(Resource):
             token = request.headers.get('auth-token')
 
             if not check_token(token):
-                adapt_error('unauthorized')
+                return adapt_error('unauthorized')
 
             hashtag = adapt_hashtag(json.loads(request.data.decode('utf-8')))
             put_hashtag(hashtag)
@@ -59,7 +59,7 @@ class HashtagListApi(Resource):
             token = request.headers.get('auth-token')
 
             if not check_token(token):
-                adapt_error('unauthorized')
+                return adapt_error('unauthorized')
 
             result = []
             hashtags = get_hashtags()

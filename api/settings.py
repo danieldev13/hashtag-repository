@@ -34,7 +34,7 @@ class DatabaseSettings:
     def __init__(self):
         self.__host = 'bolt://localhost:7687'
         self.__user = 'neo4j'
-        self.__pwd = 'cerosneo4j'
+        self.__pwd = 'hashtag'
 
     @property
     def host(self):
